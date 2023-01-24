@@ -24,7 +24,7 @@ COPY ./ .
 RUN cargo build --target x86_64-unknown-linux-musl --release
 
 # Final image
-FROM alpine
+FROM alpine:latest
 
 # Import user info from builder
 COPY --from=builder /etc/passwd /etc/passwd

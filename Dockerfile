@@ -39,6 +39,6 @@ COPY --from=builder /rust-blog/target/x86_64-unknown-linux-musl/release/blog ./
 COPY ./ .
 
 # Use an unprivileged user.
-USER rust-blog:rust-blog
+USER rust-blog-user:rust-blog-user
 
 CMD ["/rust-blog/blog"]

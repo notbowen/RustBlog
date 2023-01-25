@@ -1,77 +1,49 @@
-use actix_web::{get, web, HttpResponse, Responder};
+use actix_web::{
+    get, post,
+    web::{self, Data, Json},
+    HttpResponse, Responder,
+};
 use pulldown_cmark::{html, Options, Parser};
-use std::{fs, io::Error};
 
-use super::home_handler::Frontmatter;
-
-fn extract_markdown(post_name: &str) -> Result<String, Error> {
-    let markdown = match fs::read_to_string(format!("./posts/{}/post.md", post_name)) {
-        Ok(markdown) => markdown,
-        Err(e) => {
-            eprintln!("{:?}", e);
-            return Err(e);
-        }
-    };
-
-    Ok(markdown)
-}
-
-fn extract_frontmatter(post_name: &str) -> Result<Frontmatter, Error> {
-    let frontmatter_input =
-        match fs::read_to_string(format!("./posts/{}/post_frontmatter.toml", post_name)) {
-            Ok(s) => s,
-            Err(e) => {
-                eprintln!("{:?}", e);
-                return Err(e);
-            }
-        };
-
-    let frontmatter = match toml::from_str(&frontmatter_input) {
-        Ok(fm) => fm,
-        Err(e) => {
-            eprint!("{:?}", e);
-            return Err(Error::new(
-                std::io::ErrorKind::Other,
-                "Could not find post frontmatter",
-            ));
-        }
-    };
-
-    Ok(frontmatter)
-}
+use crate::model::blog_model::{Blog, BlogBMC};
+use crate::surrealdb_repo::SurrealDBRepo;
 
 #[get("/posts/{post_name}")]
-pub async fn post(tmpl: web::Data<tera::Tera>, post_name: web::Path<String>) -> impl Responder {
+pub async fn post(
+    tmpl: web::Data<tera::Tera>,
+    db: Data<SurrealDBRepo>,
+    post_id: web::Path<String>,
+) -> impl Responder {
     let mut context = tera::Context::new();
     let options = Options::empty();
 
-    let markdown_input = match extract_markdown(&post_name) {
-        Ok(s) => s,
+    let id = post_id.into_inner();
+
+    if id.is_empty() {
+        return HttpResponse::BadRequest()
+            .content_type("text/html")
+            .body("<h1>Bad Request!</h1><p>Invalid ID!</p>");
+    }
+
+    let blog: Blog = match BlogBMC::get(db, &id).await {
+        Ok(b) => serde_json::from_str(&b.to_string()).expect("Able to parse JSON"),
         Err(e) => {
-            eprintln!("{:?}", e);
-            return HttpResponse::NotFound()
+            return HttpResponse::InternalServerError()
                 .content_type("text/html")
-                .body("<p>Could not find post :(</p>");
+                .body(format!(
+                    "<h1>Internal Server Error!</h1><p>Error: {}</p>",
+                    e.to_string()
+                ))
         }
     };
 
-    let frontmatter = match extract_frontmatter(&post_name) {
-        Ok(s) => s,
-        Err(e) => {
-            eprintln!("{:?}", e);
-            return HttpResponse::NotFound()
-                .content_type("text/html")
-                .body("<p>Could not find post :(</p>");
-        }
-    };
-
-    let parser = Parser::new_ext(&markdown_input, options);
+    let parser = Parser::new_ext(&blog.content, options);
 
     let mut html_output = String::new();
     html::push_html(&mut html_output, parser);
 
     context.insert("post", &html_output);
-    context.insert("meta_data", &frontmatter);
+    context.insert("meta_data", &blog);
 
     match tmpl.render("post.html", &context) {
         Ok(s) => HttpResponse::Ok().content_type("text/html").body(s),
@@ -81,5 +53,28 @@ pub async fn post(tmpl: web::Data<tera::Tera>, post_name: web::Path<String>) -> 
                 .content_type("text/html")
                 .body("<p>Could not find post :(</p>");
         }
+    }
+}
+
+#[post("/create_post")]
+pub async fn create_post(db: Data<SurrealDBRepo>, blog: Json<Blog>) -> HttpResponse {
+    let data = Blog {
+        id: blog.id.to_owned(),
+        title: blog.title.to_owned(),
+        content: blog.content.to_owned(),
+        posted: blog.posted.to_owned(),
+        author: blog.author.to_owned(),
+        estimated_reading_time: blog.estimated_reading_time.to_owned(),
+        order: blog.order.to_owned(),
+    };
+
+    let blog_detail = BlogBMC::create(db, "blog", blog.id.clone(), data).await;
+
+    match blog_detail {
+        Ok(b) => HttpResponse::Ok().json(b),
+        Err(e) => HttpResponse::InternalServerError().body(format!(
+            "<h1>Internal Server Error!</h1><p>Error: {}</p>",
+            e.to_string()
+        )),
     }
 }

@@ -1,78 +1,27 @@
+use actix_web::web::Data;
 use actix_web::{get, web, HttpResponse, Responder};
-use ignore::WalkBuilder;
-use serde::{Deserialize, Serialize};
-use std::{fs, io::Error};
 
-#[derive(Debug, Deserialize, Serialize)]
-pub struct Frontmatter {
-    title: String,
-    file_name: String,
-    description: String,
-    posted: String,
-    tags: Vec<String>,
-    author: String,
-    estimated_reading_time: u32,
-    order: u32,
-}
-
-fn find_all_frontmatters() -> Result<Vec<Frontmatter>, std::io::Error> {
-    let mut t = ignore::types::TypesBuilder::new();
-    t.add_defaults();
-
-    let toml = match t.select("toml").build() {
-        Ok(t) => t,
-        Err(e) => {
-            eprintln!("{:}", e);
-            return Err(Error::new(
-                std::io::ErrorKind::Other,
-                "Could not build toml file type matcher",
-            ));
-        }
-    };
-
-    let file_walker = WalkBuilder::new("./posts").types(toml).build();
-
-    let mut frontmatters = Vec::new();
-    for frontmatter in file_walker {
-        match frontmatter {
-            Ok(fm) => {
-                if fm.path().is_file() {
-                    let fm_content = fs::read_to_string(fm.path())?;
-                    let frontmatter = toml::from_str(&fm_content)?;
-
-                    frontmatters.push(frontmatter);
-                }
-            }
-            Err(e) => {
-                eprintln!("{:}", e);
-                return Err(Error::new(
-                    std::io::ErrorKind::NotFound,
-                    "Could not locate frontmatter",
-                ));
-            }
-        }
-    }
-
-    Ok(frontmatters)
-}
+use crate::model::blog_model::BlogBMC;
+use crate::surrealdb_repo::SurrealDBRepo;
 
 #[get("/")]
-pub async fn index(templates: web::Data<tera::Tera>) -> impl Responder {
+pub async fn index(templates: web::Data<tera::Tera>, db: Data<SurrealDBRepo>) -> impl Responder {
     let mut context = tera::Context::new();
-
-    let mut frontmatters = match find_all_frontmatters() {
-        Ok(fm) => fm,
+    let mut blogs = match BlogBMC::get_all(db).await {
+        Ok(b) => b,
         Err(e) => {
-            eprintln!("{:?}", e);
             return HttpResponse::InternalServerError()
                 .content_type("text/html")
-                .body("<p>Something went wrong!</p>");
+                .body(format!(
+                    "<h1>Internal Server Error!</h1><p>Error: {}</p>",
+                    e
+                ));
         }
     };
 
-    frontmatters.sort_by(|a, b| b.order.cmp(&a.order));
+    blogs.sort_by(|a, b| b.get("order").cmp(&a.get("order")));
 
-    context.insert("posts", &frontmatters);
+    context.insert("posts", &blogs);
 
     match templates.render("home.html", &context) {
         Ok(s) => HttpResponse::Ok().content_type("text/html").body(s),

@@ -1,8 +1,0 @@
-title = "My First Article"
-file_name = 'my-first-article'
-description = 'The first article authored by me'
-tags = []
-posted = '19/01/2023'
-estimated_reading_time = 1
-author = 'Hu Bowen'
-order = 1

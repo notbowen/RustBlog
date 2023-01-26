@@ -10,6 +10,10 @@ processes = []
 [experimental]
   auto_rollback = true
 
+[mounts]
+source = "blog_data"
+destination = "/rust-blog"
+
 [[services]]
   http_checks = []
   internal_port = 8080

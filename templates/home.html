@@ -6,7 +6,7 @@
     <h1 class="text-center text-3xl">Test Blog</h1>
     <h3 class="text-center text-lg mt-2 text-gray-600">A simple test blog written in Rust</h3>
     {% for fm in posts %}
-    <a class="mb-3" href="/posts/{{fm.file_name}}">
+    <a class="mb-3" href="/posts/{{fm.post_id}}">
         <div class="flex flex-col mb-5 px-4 py-6 cursor-pointer">
             <h2 class="text-2xl font-semibold hover:underline">{{fm.title}}</h2>
             <div class="flex items-center mt-2">

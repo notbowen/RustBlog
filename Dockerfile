@@ -1,47 +1,10 @@
-# Builder
-FROM rust:latest AS builder
+FROM rust:slim
 
-ARG OPENSSL_DIR=/usr/local/ssl
-
-RUN rustup target add x86_64-unknown-linux-musl
-RUN apt update && apt install -y musl-tools musl-dev
-RUN apt install pkg-config libssl-dev
-RUN update-ca-certificates
-
-ENV USER=rust-blog-user
-ENV UID=10001
-
-RUN adduser \
-    --disabled-password \
-    --gecos "" \
-    --home "/nonexistent" \
-    --shell "/sbin/nologin" \
-    --no-create-home \
-    --uid "${UID}" \
-    "${USER}"
+RUN apt update && apt install -y pkg-config libssl-dev clang patch
 
 WORKDIR /rust-blog
-
 COPY ./ .
 
-RUN cargo build --target x86_64-unknown-linux-musl --release
+RUN cargo build --release
 
-# Final image
-FROM alpine:latest
-
-# Import user info from builder
-COPY --from=builder /etc/passwd /etc/passwd
-COPY --from=builder /etc/group /etc/group
-
-WORKDIR /rust-blog
-
-# Copy binary over
-COPY --from=builder /rust-blog/target/x86_64-unknown-linux-musl/release/blog ./
-
-# Copy other files over
-COPY ./ .
-
-# Use an unprivileged user.
-USER rust-blog-user:rust-blog-user
-
-CMD ["/rust-blog/blog"]
+CMD ["/rust-blog/target/release/blog"]

@@ -1,20 +1,8 @@
 use actix_files::Files;
-use actix_web::{
-    dev::Server,
-    middleware,
-    web::{self, Data},
-    App, HttpResponse, HttpServer,
-};
-use anyhow::Result;
-use surrealdb::{Datastore, Session};
-use surrealdb_repo::SurrealDBRepo;
+use actix_web::{dev::Server, middleware, web, App, HttpResponse, HttpServer};
 use tera::Tera;
 
 pub mod handlers;
-pub mod model;
-mod surrealdb_repo;
-
-type DB = (Datastore, Session);
 
 #[macro_use]
 extern crate lazy_static;
@@ -34,16 +22,10 @@ lazy_static! {
     };
 }
 
-pub async fn start_blog(address: &str) -> Result<Server> {
-    let surreal = SurrealDBRepo::init()
-        .await
-        .expect("Able to connect to SurrealDB!");
-    let db_data = Data::new(surreal);
-
+pub fn start_blog(address: &str) -> Result<Server, std::io::Error> {
     let srv = HttpServer::new(move || {
         App::new()
             .app_data(web::Data::new(TEMPLATES.clone()))
-            .app_data(db_data.clone())
             .wrap(middleware::Logger::default())
             .service(Files::new("/static", "static/").use_last_modified(true))
             .route("/health", web::get().to(HttpResponse::Ok))

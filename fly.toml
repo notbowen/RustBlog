@@ -12,7 +12,7 @@ processes = []
 
 [mounts]
 source = "blog_data"
-destination = "/rust-blog"
+destination = "/mnt"
 
 [[services]]
   http_checks = []

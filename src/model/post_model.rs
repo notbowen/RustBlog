@@ -1,14 +1,10 @@
-#![allow(unused)]
 use actix_web::web::Data;
-use serde::de::IntoDeserializer;
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
 use surrealdb::sql::{thing, Array, Object, Value};
-use surrealdb::Val;
-use thiserror::__private::PathAsDisplay;
 
 use crate::prelude::*;
-use crate::surrealdb_repo::{Creatable, Patchable, SurrealDBRepo};
+use crate::surrealdb_repo::SurrealDBRepo;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Post {
@@ -82,8 +78,6 @@ impl From<PostPatch> for Value {
         Value::from(value)
     }
 }
-
-impl Patchable for PostPatch {}
 
 pub struct PostBMC;
 
@@ -160,7 +154,7 @@ impl PostBMC {
 
         let ress = db.ds.execute(sql, &db.ses, Some(vars), false).await?;
 
-        let first_res = ress.into_iter().next().expect("Able to get ID").result?;
+        ress.into_iter().next().expect("Able to get ID").result?;
 
         Ok(tid)
     }

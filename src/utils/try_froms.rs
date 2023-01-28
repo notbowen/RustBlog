@@ -63,23 +63,23 @@ impl TryFrom<W<Value>> for Post {
                 .get("post_id")
                 .unwrap()
                 .to_string()
-                .replace("\"", ""),
+                .replace('\"', ""),
             author: post_obj
                 .get("author")
                 .unwrap()
                 .to_string()
-                .replace("\"", ""),
+                .replace('\"', ""),
             content: post_obj
                 .get("content")
                 .unwrap()
                 .to_string()
-                .replace("\"", ""),
+                .replace('\"', ""),
             posted: post_obj
                 .get("posted")
                 .unwrap()
                 .to_string()
-                .replace("\"", ""),
-            title: post_obj.get("title").unwrap().to_string().replace("\"", ""),
+                .replace('\"', ""),
+            title: post_obj.get("title").unwrap().to_string().replace('\"', ""),
             estimated_reading_time: post_obj
                 .get("estimated_reading_time")
                 .unwrap()

@@ -1,9 +1,5 @@
 use std::sync::Arc;
-use surrealdb::sql::Value;
 use surrealdb::{Datastore, Error, Session};
-
-pub trait Creatable: Into<Value> {}
-pub trait Patchable: Into<Value> {}
 
 #[derive(Clone)]
 pub struct SurrealDBRepo {

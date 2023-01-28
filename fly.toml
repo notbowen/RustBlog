@@ -1,4 +1,4 @@
-# fly.toml file generated for hubowen-rust-blog on 2023-01-24T17:43:42+08:00
+# fly.toml file generated for hubowen-rust-blog on 2023-01-26T23:16:54+08:00
 
 app = "hubowen-rust-blog"
 kill_signal = "SIGINT"
@@ -11,8 +11,8 @@ processes = []
   auto_rollback = true
 
 [mounts]
-source = "blog_data"
-destination = "/rust-blog"
+  destination = "/rust-blog"
+  source = "blog_data"
 
 [[services]]
   http_checks = []

@@ -46,6 +46,8 @@ pub async fn start_blog(address: &str) -> Result<Server, std::io::Error> {
             .service(handlers::index)
             .service(handlers::post)
             .service(handlers::create_post)
+            .service(handlers::update_post)
+            .service(handlers::delete_post)
     })
     .bind(address)?
     .run();

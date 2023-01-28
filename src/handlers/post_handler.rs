@@ -1,13 +1,13 @@
 use actix_web::{
-    get, post,
-    web::{self, Data, Json},
+    delete, get, post, put,
+    web::{Data, Json, Path},
     HttpResponse, Responder,
 };
 use pulldown_cmark::{html, Options, Parser};
 use tera::Tera;
 
 use crate::{
-    model::post_model::{Post, PostBMC},
+    model::post_model::{Post, PostBMC, PostPatch},
     surrealdb_repo::SurrealDBRepo,
 };
 
@@ -15,7 +15,7 @@ use crate::{
 pub async fn post(
     tmpl: Data<Tera>,
     db: Data<SurrealDBRepo>,
-    post_id: web::Path<String>,
+    post_id: Path<String>,
 ) -> impl Responder {
     let mut context = tera::Context::new();
     let options = Options::empty();
@@ -28,9 +28,10 @@ pub async fn post(
 
     let post_detail = match PostBMC::get(db, &id).await {
         Ok(p) => p,
-        Err(e) => {
-            return HttpResponse::InternalServerError()
-                .body(format!("<h1>Internal Server Error</h1><p>Error: {}</p>", e));
+        Err(_) => {
+            return HttpResponse::NotFound().body(
+                "<h1>404 Not Found</h1><p>Couldn't find the post you were looking for :(</p>",
+            );
         }
     };
 
@@ -73,7 +74,56 @@ pub async fn create_post(
 
     match post_detail {
         Ok(p) => HttpResponse::Ok().json(p),
-        Err(e) => HttpResponse::InternalServerError()
-            .body(format!("<h1>Internal Server Error<h1><p>Error: {}</p>", e)),
+        Err(e) => HttpResponse::InternalServerError().body(e.to_string()),
+    }
+}
+
+#[put("/posts/{post_id}")]
+pub async fn update_post(
+    _: Data<Tera>,
+    db: Data<SurrealDBRepo>,
+    post_id: Path<String>,
+    post_patch: Json<PostPatch>,
+) -> HttpResponse {
+    let id = post_id.into_inner();
+
+    if id.is_empty() {
+        return HttpResponse::BadRequest().body("<h1>Bad Request</h1><p>Invalid ID</p>");
+    }
+
+    let data = PostPatch {
+        title: post_patch.title.to_owned(),
+        content: post_patch.content.to_owned(),
+        posted: post_patch.posted.to_owned(),
+        author: post_patch.author.to_owned(),
+        estimated_reading_time: post_patch.estimated_reading_time.to_owned(),
+        order: post_patch.order.to_owned(),
+    };
+
+    let update_result = PostBMC::update(db, &id, data).await;
+
+    match update_result {
+        Ok(p) => HttpResponse::Ok().json(p),
+        Err(e) => HttpResponse::InternalServerError().body(e.to_string()),
+    }
+}
+
+#[delete("/posts/{post_id}")]
+pub async fn delete_post(
+    _: Data<Tera>,
+    db: Data<SurrealDBRepo>,
+    post_id: Path<String>,
+) -> HttpResponse {
+    let id = post_id.into_inner();
+
+    if id.is_empty() {
+        return HttpResponse::BadRequest().body("<h1>Bad Request</h1><p>Invalid ID</p>");
+    }
+
+    let result = PostBMC::delete(db, &id).await;
+
+    match result {
+        Ok(p) => HttpResponse::Ok().json(p),
+        Err(e) => HttpResponse::InternalServerError().body(e.to_string()),
     }
 }

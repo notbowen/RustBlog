@@ -11,8 +11,8 @@ processes = []
   auto_rollback = true
 
 [mounts]
-  destination = "/rust-blog"
-  source = "blog_data"
+source = "blog_data"
+destination = "/mnt"
 
 [[services]]
   http_checks = []

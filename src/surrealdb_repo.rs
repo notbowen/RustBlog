@@ -13,7 +13,7 @@ pub struct SurrealDBRepo {
 
 impl SurrealDBRepo {
     pub async fn init() -> Result<Self, Error> {
-        let ds = Arc::new(Datastore::new("file://blog.db").await?);
+        let ds = Arc::new(Datastore::new("file:///mnt/blog_data/blog.db").await?);
         let ses = Session::for_db("my_ns", "my_db");
 
         Ok(SurrealDBRepo { ds, ses })

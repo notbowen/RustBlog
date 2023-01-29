@@ -1,4 +1,4 @@
-# fly.toml file generated for hubowen-rust-blog on 2023-01-29T17:19:28+08:00
+# fly.toml file generated for hubowen-rust-blog on 2023-01-29T21:49:22+08:00
 
 app = "hubowen-rust-blog"
 kill_signal = "SIGINT"

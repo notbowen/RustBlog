@@ -63,23 +63,47 @@ impl TryFrom<W<Value>> for Post {
                 .get("post_id")
                 .unwrap()
                 .to_string()
-                .replace('\"', ""),
+                .strip_prefix('\"')
+                .unwrap()
+                .strip_suffix('\"')
+                .unwrap()
+                .to_string(),
             author: post_obj
                 .get("author")
                 .unwrap()
                 .to_string()
-                .replace('\"', ""),
+                .strip_prefix('\"')
+                .unwrap()
+                .strip_suffix('\"')
+                .unwrap()
+                .to_string(),
             content: post_obj
                 .get("content")
                 .unwrap()
                 .to_string()
-                .replace('\"', ""),
+                .strip_prefix('\"')
+                .unwrap()
+                .strip_suffix('\"')
+                .unwrap()
+                .to_string(),
             posted: post_obj
                 .get("posted")
                 .unwrap()
                 .to_string()
-                .replace('\"', ""),
-            title: post_obj.get("title").unwrap().to_string().replace('\"', ""),
+                .strip_prefix('\"')
+                .unwrap()
+                .strip_suffix('\"')
+                .unwrap()
+                .to_string(),
+            title: post_obj
+                .get("title")
+                .unwrap()
+                .to_string()
+                .strip_prefix('\"')
+                .unwrap()
+                .strip_suffix('\"')
+                .unwrap()
+                .to_string(),
             estimated_reading_time: post_obj
                 .get("estimated_reading_time")
                 .unwrap()

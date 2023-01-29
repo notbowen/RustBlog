@@ -1,5 +1,6 @@
 use actix_files::Files;
 use actix_web::dev::Server;
+use actix_web::guard::fn_guard;
 use actix_web::web::{self, Data};
 use actix_web::{middleware, App, HttpResponse, HttpServer};
 use surrealdb_repo::SurrealDBRepo;
@@ -36,7 +37,11 @@ pub async fn start_blog(address: &str) -> Result<Server, std::io::Error> {
         .expect("Able to connect to SurrealDB");
     let db_data = Data::new(surreal);
 
+    let token = std::env::var("RUST_BLOG_AUTH").unwrap();
+
     let srv = HttpServer::new(move || {
+        let token = token.clone();
+
         App::new()
             .app_data(web::Data::new(TEMPLATES.clone()))
             .app_data(db_data.clone())
@@ -45,9 +50,18 @@ pub async fn start_blog(address: &str) -> Result<Server, std::io::Error> {
             .route("/health", web::get().to(HttpResponse::Ok))
             .service(handlers::index)
             .service(handlers::post)
-            .service(handlers::create_post)
-            .service(handlers::update_post)
-            .service(handlers::delete_post)
+            .service(
+                web::resource("/posts/{id}")
+                    .guard(fn_guard(move |req| {
+                        match req.head().headers().get("Authorization") {
+                            Some(val) => val == token.clone().as_str(),
+                            None => false,
+                        }
+                    }))
+                    .route(web::post().to(handlers::create_post))
+                    .route(web::put().to(handlers::update_post))
+                    .route(web::delete().to(handlers::delete_post)),
+            )
     })
     .bind(address)?
     .run();

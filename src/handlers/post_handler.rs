@@ -1,5 +1,5 @@
 use actix_web::{
-    delete, get, post, put,
+    get,
     web::{Data, Json, Path},
     HttpResponse, Responder,
 };
@@ -54,7 +54,6 @@ pub async fn post(
     }
 }
 
-#[post("/posts")]
 pub async fn create_post(
     _: Data<Tera>,
     db: Data<SurrealDBRepo>,
@@ -78,7 +77,6 @@ pub async fn create_post(
     }
 }
 
-#[put("/posts/{post_id}")]
 pub async fn update_post(
     _: Data<Tera>,
     db: Data<SurrealDBRepo>,
@@ -108,7 +106,6 @@ pub async fn update_post(
     }
 }
 
-#[delete("/posts/{post_id}")]
 pub async fn delete_post(
     _: Data<Tera>,
     db: Data<SurrealDBRepo>,

@@ -14,7 +14,7 @@ pub async fn index(templates: web::Data<tera::Tera>, db: Data<SurrealDBRepo>) ->
         Ok(p) => p,
         Err(e) => {
             return HttpResponse::InternalServerError()
-                .body(format!("<h1>Internal Server Error</h1><p>Error: {}</p>", e))
+                .body(format!("<h1>Internal Server Error</h1><p>Error: {e}</p>"))
         }
     };
 
@@ -25,10 +25,10 @@ pub async fn index(templates: web::Data<tera::Tera>, db: Data<SurrealDBRepo>) ->
     match templates.render("home.html", &context) {
         Ok(s) => HttpResponse::Ok().content_type("text/html").body(s),
         Err(e) => {
-            eprint!("{}", e);
+            eprint!("{e}");
             HttpResponse::InternalServerError()
                 .content_type("text/html")
-                .body(format!("<h1>Internal Server Error</h1><p>Error: {}</p>", e))
+                .body(format!("<h1>Internal Server Error</h1><p>Error: {e}</p>"))
         }
     }
 }

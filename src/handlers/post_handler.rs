@@ -46,7 +46,7 @@ pub async fn post(
     match tmpl.render("post.html", &context) {
         Ok(s) => HttpResponse::Ok().content_type("text/html").body(s),
         Err(e) => {
-            eprintln!("{:?}", e);
+            eprintln!("{e:?}");
             return HttpResponse::InternalServerError()
                 .content_type("text/html")
                 .body("<p>Something went wrong while rendering post!</p>");

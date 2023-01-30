@@ -118,7 +118,7 @@ impl PostBMC {
 
     pub async fn get(db: Data<SurrealDBRepo>, id: &str) -> Result<Post, Error> {
         let sql = "SELECT * FROM $th";
-        let tid = format!("post:`{}`", id);
+        let tid = format!("post:`{id}`");
 
         let vars: BTreeMap<String, Value> = [("th".into(), thing(&tid)?.into())].into();
 
@@ -131,7 +131,7 @@ impl PostBMC {
 
     pub async fn update(db: Data<SurrealDBRepo>, id: &str, data: PostPatch) -> Result<Post, Error> {
         let sql = "UPDATE $th MERGE $data RETURN *";
-        let tid = format!("post:`{}`", id);
+        let tid = format!("post:`{id}`");
 
         let vars = [
             ("th".into(), thing(&tid)?.into()),
@@ -148,7 +148,7 @@ impl PostBMC {
 
     pub async fn delete(db: Data<SurrealDBRepo>, id: &str) -> Result<String, Error> {
         let sql = "DELETE $th RETURN *";
-        let tid = format!("post:`{}`", id);
+        let tid = format!("post:`{id}`");
 
         let vars: BTreeMap<String, Value> = [("th".into(), thing(&tid)?.into())].into();
 

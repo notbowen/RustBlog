@@ -1,10 +1,10 @@
 {% extends "base.html" %}
-{% block title %}Test blog | by Hu Bowen{% endblock title %}
+{% block title %}Bowen's Blog{% endblock title %}
 
 {% block content %}
 <div class="w-full h-full px-4 md:px-6 text-xl text-gray-800 leading-normal">
-    <h1 class="text-center text-3xl">Test Blog</h1>
-    <h3 class="text-center text-lg mt-2 text-gray-600">A simple test blog written in Rust</h3>
+    <h1 class="text-center text-3xl">Bowen's Blog</h1>
+    <h3 class="text-center text-lg mt-2 text-gray-600">A blog written in Rust and SurrealDB</h3>
     {% for fm in posts %}
     <a class="mb-3" href="/posts/{{fm.post_id}}">
         <div class="flex flex-col mb-5 px-4 py-6 cursor-pointer">

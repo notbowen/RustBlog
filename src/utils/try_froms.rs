@@ -60,62 +60,40 @@ impl TryFrom<W<Value>> for Post {
 
         let post = Post {
             post_id: post_obj
-                .get("post_id")
-                .unwrap()
+                .get("post_id")?
                 .to_string()
-                .strip_prefix('\"')
-                .unwrap()
-                .strip_suffix('\"')
-                .unwrap()
+                .strip_prefix('\"')?
+                .strip_suffix('\"')?
                 .to_string(),
             author: post_obj
-                .get("author")
-                .unwrap()
+                .get("author")?
                 .to_string()
-                .strip_prefix('\"')
-                .unwrap()
-                .strip_suffix('\"')
-                .unwrap()
+                .strip_prefix('\"')?
+                .strip_suffix('\"')?
                 .to_string(),
             content: post_obj
-                .get("content")
-                .unwrap()
+                .get("content")?
                 .to_string()
-                .strip_prefix('\"')
-                .unwrap()
-                .strip_suffix('\"')
-                .unwrap()
+                .strip_prefix('\"')?
+                .strip_suffix('\"')?
                 .to_string(),
             posted: post_obj
-                .get("posted")
-                .unwrap()
+                .get("posted")?
                 .to_string()
-                .strip_prefix('\"')
-                .unwrap()
-                .strip_suffix('\"')
-                .unwrap()
+                .strip_prefix('\"')?
+                .strip_suffix('\"')?
                 .to_string(),
             title: post_obj
-                .get("title")
-                .unwrap()
+                .get("title")?
                 .to_string()
-                .strip_prefix('\"')
-                .unwrap()
-                .strip_suffix('\"')
-                .unwrap()
+                .strip_prefix('\"')?
+                .strip_suffix('\"')?
                 .to_string(),
             estimated_reading_time: post_obj
-                .get("estimated_reading_time")
-                .unwrap()
+                .get("estimated_reading_time")?
                 .to_string()
-                .parse::<u32>()
-                .unwrap(),
-            order: post_obj
-                .get("order")
-                .unwrap()
-                .to_string()
-                .parse::<u32>()
-                .unwrap(),
+                .parse::<u32>()?,
+            order: post_obj.get("order")?.to_string().parse::<u32>()?,
         };
 
         Ok(post)

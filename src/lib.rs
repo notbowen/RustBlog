@@ -45,7 +45,9 @@ pub async fn start_blog(address: &str) -> Result<Server, std::io::Error> {
         App::new()
             .app_data(web::Data::new(TEMPLATES.clone()))
             .app_data(db_data.clone())
-            .wrap(middleware::Logger::default())
+            .wrap(middleware::Logger::new(
+                "%{r}a \"%r\" %s %b \"%{Referer}i\" \"%{User-Agent}i\" %T",
+            ))
             .service(Files::new("/static", "static/").use_last_modified(true))
             .route("/health", web::get().to(HttpResponse::Ok))
             .service(handlers::index)

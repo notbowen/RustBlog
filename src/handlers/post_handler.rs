@@ -18,7 +18,7 @@ pub async fn post(
     post_id: Path<String>,
 ) -> impl Responder {
     let mut context = tera::Context::new();
-    let options = Options::empty();
+    let options = Options::all();
 
     let id = post_id.into_inner();
 

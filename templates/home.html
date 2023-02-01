@@ -2,21 +2,27 @@
 {% block title %}Bowen's Blog{% endblock title %}
 
 {% block content %}
-<div class="w-full h-full px-4 md:px-6 text-xl text-gray-800 leading-normal">
-    <h1 class="text-center text-3xl">Bowen's Blog</h1>
-    <h3 class="text-center text-lg mt-2 text-gray-600">A blog written in <a href="https://www.rust-lang.org/">Rust</a> and <a href="https://surrealdb.com/">SurrealDB</a></h3>
-    {% for fm in posts %}
-    <a class="mb-3" href="/posts/{{fm.post_id}}">
-        <div class="flex flex-col mb-5 px-4 py-6 cursor-pointer">
-            <h2 class="text-2xl font-semibold hover:underline">{{fm.title}}</h2>
-            <div class="flex items-center mt-2">
-                <p class="hidden md:block text-base ml-2 mr-2">{{fm.posted}}</p>
-                <p class="hidden md:block text-base mx-2">{{fm.author}}</p>
-                <p class="text-base ml-0 md:ml-2">Reading time:
-                {{fm.estimated_reading_time}} min(s)</p>
-            </div>
-        </div>
-    </a>
-    {% endfor %}
-</div>
+<section>
+    <hgroup id="blog-header">
+        <h1>Bowen's Blog</h1>
+        <h2>A blog written in <a href="https://www.rust-lang.org/">Rust</a> and <a href="https://surrealdb.com/">SurrealDB</a></h2>
+    </hgroup>
+
+    <div id="blog-posts">
+        {% for post in posts %}
+        <a href="/posts/{{post.post_id}}">
+            <article>
+                <h3>{{post.title}}</h3>
+                <hr>
+                <div id="left">{{post.posted}}</div>
+                <div id="right">
+                    {% for tag in post.tags | split(pat=",") %}
+                        <code>{{tag}}</code> 
+                    {% endfor %}
+                </div>
+            </article>
+        </a>
+        {% endfor %}
+    </div>
+</section>
 {% endblock content %}

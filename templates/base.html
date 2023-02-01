@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 
 <head>
     <meta charset="UTF-8">
@@ -8,23 +8,22 @@
     {% block head %}
     <title>{% block title %}{% endblock title %}</title>
     {% endblock head %}
-    <link rel="stylesheet" type="text/css" href="/static/css/index.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/tokyo-night-dark.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css">
 
     <link rel="icon" type="image/png" sizes="32x32" href="/static/icons/favicon-32x32.png">
 </head>
 
-<body class="flex flex-col justify-between min-h-screen font-sans leading-normal tracking-normal">
-    <div class="h-16">{% block header %}{% endblock header %}</div>
+<body>
+    <div>{% block header %}{% endblock header %}</div>
 
-    <main class="container flex-1 w-full md:max-w-3xl mx-auto overflow-x-hidden">
+    <main class="container">
         {% block content %}{% endblock content %}
     </main>
-    {% block footer %}
-    <div class="flex w-full h-20 justify-center items-center">
+    <footer class="container">
         &copy; 2023 by <a class="pl-2" href="https://notbowen.github.io/">Hu Bowen</a>
-    </div>
-    {% endblock footer %}
+    </footer>
 </body>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>

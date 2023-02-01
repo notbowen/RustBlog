@@ -1,0 +1,33 @@
+#blog-header {
+    text-align: center;
+}
+
+#blog-posts, #post {
+    max-width: 646px;
+    margin: auto;
+}
+
+#blog-posts #left {
+    float: left;
+}
+
+#blog-posts #right {
+    float: right;
+}
+
+#blog-posts article {
+    padding-top: 20px;
+    padding-bottom: 46px;
+}
+
+#blog-posts h3 {
+    margin-bottom: 10px;
+}
+
+#blog-posts footer {
+    margin-top: 10px;
+}
+
+footer {
+    text-align: center;
+}

@@ -93,7 +93,7 @@ pub async fn update_post(
         title: post_patch.title.to_owned(),
         content: post_patch.content.to_owned(),
         posted: post_patch.posted.to_owned(),
-        author: post_patch.author.to_owned(),
+        tags: post_patch.tags.to_owned(),
         estimated_reading_time: post_patch.estimated_reading_time.to_owned(),
         order: post_patch.order.to_owned(),
     };

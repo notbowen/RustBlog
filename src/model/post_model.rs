@@ -42,7 +42,7 @@ pub struct PostPatch {
     pub title: Option<String>,
     pub content: Option<String>,
     pub posted: Option<String>,
-    pub author: Option<String>,
+    pub tags: Option<String>,
     pub estimated_reading_time: Option<u32>,
     pub order: Option<u32>,
 }
@@ -63,8 +63,8 @@ impl From<PostPatch> for Value {
             value.insert("posted".into(), p.into());
         }
 
-        if let Some(a) = val.author {
-            value.insert("author".into(), a.into());
+        if let Some(a) = val.tags {
+            value.insert("tags".into(), a.into());
         }
 
         if let Some(e) = val.estimated_reading_time {

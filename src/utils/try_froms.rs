@@ -68,8 +68,8 @@ impl TryFrom<W<Value>> for Post {
                 .strip_suffix('\"')
                 .unwrap()
                 .to_string(),
-            author: post_obj
-                .get("author")
+            tags: post_obj
+                .get("tags")
                 .unwrap()
                 .to_string()
                 .strip_prefix('\"')

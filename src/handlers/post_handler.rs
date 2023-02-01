@@ -61,7 +61,7 @@ pub async fn create_post(
 ) -> HttpResponse {
     let new_post = Post {
         post_id: new_post.post_id.to_owned(),
-        author: new_post.author.to_owned(),
+        tags: new_post.tags.to_owned(),
         content: new_post.content.to_owned(),
         posted: new_post.posted.to_owned(),
         title: new_post.title.to_owned(),

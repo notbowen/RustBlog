@@ -12,7 +12,7 @@ pub struct Post {
     pub title: String,
     pub content: String,
     pub posted: String,
-    pub author: String,
+    pub tags: String,
     pub estimated_reading_time: u32,
     pub order: u32,
 }
@@ -24,7 +24,7 @@ impl From<Post> for Value {
             ("title".into(), val.title.into()),
             ("content".into(), val.content.into()),
             ("posted".into(), val.posted.into()),
-            ("author".into(), val.author.into()),
+            ("tags".into(), val.tags.into()),
             (
                 "estimated_reading_time".into(),
                 val.estimated_reading_time.into(),

@@ -17,7 +17,9 @@
 
 #blog-posts article {
     padding-top: 20px;
-    padding-bottom: 46px;
+    padding-bottom: 20px;
+    display: block;
+    overflow: auto;
 }
 
 #blog-posts h3 {
@@ -30,4 +32,10 @@
 
 footer {
     text-align: center;
+}
+
+@media screen and (max-width: 351px) {
+    #blog-posts #right {
+        float: left;
+    }
 }

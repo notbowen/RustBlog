@@ -1,5 +1,17 @@
+a {
+    cursor: pointer;
+}
+
 #blog-header {
     text-align: center;
+}
+
+#icons {
+    display: flex;
+    gap: 30px;
+    margin: auto;
+    align-content: center;
+    justify-content: center;
 }
 
 #blog-posts, #post {

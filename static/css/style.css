@@ -50,5 +50,6 @@ footer {
 @media screen and (max-width: 360px) {
     #blog-posts #right {
         float: left;
+        margin-top: 5px;
     }
 }

@@ -21,6 +21,7 @@ a {
 
 #blog-posts #left {
     float: left;
+    padding-right: 8px;
 }
 
 #blog-posts #right {
@@ -46,7 +47,7 @@ footer {
     text-align: center;
 }
 
-@media screen and (max-width: 351px) {
+@media screen and (max-width: 360px) {
     #blog-posts #right {
         float: left;
     }

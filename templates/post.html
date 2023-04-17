@@ -2,12 +2,6 @@
 
 {% block title %}{{ meta_data.title }}{% endblock title %}
 
-{% block header %}
-<div id="blog-header" class="grid" style="padding: 10px;">
-    <a href="/">Go back</a>
-</div>
-{% endblock header %}
-
 {% block content %}
     <section id="post">
         {{ post | safe }}

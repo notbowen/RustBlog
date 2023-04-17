@@ -2,6 +2,12 @@ a {
     cursor: pointer;
 }
 
+nav {
+    padding: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
 #blog-header {
     text-align: center;
 }
@@ -12,6 +18,10 @@ a {
     margin: auto;
     align-content: center;
     justify-content: center;
+}
+
+.container {
+    padding: 0px;
 }
 
 #blog-posts, #post {

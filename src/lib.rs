@@ -43,6 +43,7 @@ pub async fn start_blog(address: &str) -> Result<Server, std::io::Error> {
         let token = token.clone();
 
         App::new()
+            .wrap(middleware::NormalizePath::trim())
             .app_data(web::Data::new(TEMPLATES.clone()))
             .app_data(db_data.clone())
             .wrap(middleware::Logger::new(

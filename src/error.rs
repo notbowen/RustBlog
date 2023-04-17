@@ -4,7 +4,7 @@ pub enum Error {
     XValueNotOfType(&'static str),
 
     #[error(transparent)]
-    Surreal(#[from] surrealdb::Error),
+    Surreal(#[from] surrealdb::error::Db),
 
     #[error(transparent)]
     IO(#[from] std::io::Error),

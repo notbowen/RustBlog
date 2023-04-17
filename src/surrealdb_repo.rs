@@ -1,5 +1,7 @@
 use std::sync::Arc;
-use surrealdb::{Datastore, Error, Session};
+use surrealdb::dbs::Session;
+use surrealdb::kvs::Datastore;
+use surrealdb::Error;
 
 #[derive(Clone)]
 pub struct SurrealDBRepo {

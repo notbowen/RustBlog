@@ -54,7 +54,6 @@ pub async fn start_blog(address: &str) -> Result<Server, Box<dyn std::error::Err
             .service(Files::new("/static", "static/").use_last_modified(true))
             .route("/health", web::get().to(HttpResponse::Ok))
             .service(handlers::index)
-            .service(handlers::posts)
             .service(handlers::post)
             .service(
                 web::resource("/posts/{id}")

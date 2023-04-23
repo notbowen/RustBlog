@@ -1,5 +1,24 @@
 {% extends "base.html" %}
-{% block title %}Bowen's Portfolio{% endblock %}
+{% block title %}Bowen's Portfolio{% endblock title %}
 
 {% block content %}
-{% endblock %}
+    <div id="home">
+        <div id="about">
+            <img src="/static/images/profile_pic.jpg" alt="Profile Picture">
+            <p style="text-align: center;">About Me</p>
+            <p>Hi, I am a Year 1 student studying Cybersecurity and Digital Forensics in Ngee Ann Polytechnic.</p>
+        </div>
+
+        <div id="posts">
+            {% for post in posts %}
+            <a href="/posts/{{ post.post_id }}">
+                <div id="post">
+                    <h1>{{ post.title | upper }}</h1>
+                    <p id="tags"><strong>{{ post.tags }}</strong></p>
+                    <p id="post-content">{{ post.content | striptags | replace(from="#", to="") | replace(from="[", to="") | replace(from="]", to="") | replace(from=post.title, to="") | truncate(length=200, end="...") }}</p>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}

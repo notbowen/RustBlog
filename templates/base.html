@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -9,7 +9,6 @@
     <title>{% block title %}{% endblock title %}</title>
     {% endblock head %}
     <link rel="stylesheet" type="text/css" href="/static/css/style.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/pico.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/tokyo-night-dark.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -17,32 +16,29 @@
 </head>
 
 <body>
-    <nav>
-        <ul>
-            <li><a href="#" class="secondary">
-                <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="16px" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-            </a></li>
-        </ul>
-        <ul>
-            <li><a href="/"><strong>Hu Bowen</strong></a></li>
-        </ul>
-        <ul>
-            <li><a href="https://github.com/notbowen" class="secondary"><i class="fa fa-github"></i></a></li>
-            <li><a href="https://linkedin.com/in/hubowen" class="secondary"><i class="fa fa-linkedin-square"></i></a></li>
-            <li><a href="mailto://contact@hubowen.dev" class="secondary"><i class="fa fa-envelope"></i></a></li>
-        </ul>
-    </nav>
+    <h1 id="title">HU BOWEN</h1>
 
-    <main class="container">
-        {% block content %}{% endblock content %}
+    <div id="nav">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/projects">Projects</a></li>
+            <li><a href="/testimonials">Testimonials</a></li>
+
+            <li style="float: right;"><a href="https://github.com/notbowen/"><i class="fa fa-github"></i></a></li>
+            <li style="float: right;"><a href="https://www.linkedin.com/in/hubowen/"><i class="fa fa-linkedin-square"></i></a></li>
+            <li style="float: right;"><a href="mailto:contact@hubowen.dev"><i class="fa fa-envelope"></i></a></li>
+        </ul>
+    </div>
+
+    <main id="swup" class="transition-fade">
+        {% block content %}
+        {% endblock content %}
     </main>
-    <footer class="container">
-        &copy; 2023 by <a class="pl-2" href="https://notbowen.github.io/">Hu Bowen</a>
-    </footer>
+
+    <script src="https://unpkg.com/swup@3"></script>
+    <script src="/static/js/app.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    </script>
 </body>
-
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-<script>hljs.highlightAll();</script>
-</script>
-
 </html>

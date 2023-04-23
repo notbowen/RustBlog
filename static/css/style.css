@@ -1,65 +1,139 @@
-a {
+@font-face {
+    font-family: BebasNeue;
+    src: url(/static/fonts/BebasNeue-Regular.ttf);
+}
+
+@font-face {
+    font-family: Montserrat;
+    src: url(/static/fonts/Montserrat-VariableFont_wght.ttf);
+}
+
+html {
+    background-color: #74d3c4;
+    font-family: Montserrat;
+}
+
+#title {
+    font-family: BebasNeue;
+    font-size: 64px;
+    text-align: center;
+    margin-top: 40px;
+}
+
+#nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+
+    background-color: aliceblue;
+    border-radius: 10px;
+    margin: 0 auto;
+}
+
+#nav li {
+    float: left;
+
+    font-size: 20px;
+    font-weight: bold;
+
+    transition: 0.3s;
     cursor: pointer;
 }
 
-nav {
-    padding: 20px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+#nav a {
+    text-decoration: none;
+    color: #000000;
+    transition: 0.3s;
 }
 
-#blog-header {
-    text-align: center;
-}
-
-#icons {
-    display: flex;
-    gap: 30px;
-    margin: auto;
-    align-content: center;
-    justify-content: center;
-}
-
-.container {
-    padding: 0px;
-}
-
-#blog-posts, #post {
-    max-width: 646px;
-    margin: auto;
-}
-
-#blog-posts #left {
-    float: left;
-    padding-right: 8px;
-}
-
-#blog-posts #right {
-    float: right;
-}
-
-#blog-posts article {
-    padding-top: 20px;
-    padding-bottom: 20px;
+#nav li a {
     display: block;
-    overflow: auto;
+    padding: 20px;
 }
 
-#blog-posts h3 {
-    margin-bottom: 10px;
+#nav li:hover {
+    background-color: #51948f;
+    color: #e2fffd;
 }
 
-#blog-posts footer {
-    margin-top: 10px;
+#nav li:hover a {
+    color: inherit;
 }
 
-footer {
+#nav ul, #home, #blog_post {
+    margin: 20px auto;
+    width: 70%;
+}
+
+#home img {
+    border-radius: 50%;
+    width: 150px;
+    margin: auto;
+    display: block;
+}
+
+#posts {
+    overflow: hidden;
+    min-height: 50px;
+}
+
+#posts a {
+    color: #000000;
+    text-decoration: none;
+}
+
+#about {
+    float: right;
+    width: 45%;
+    min-height: 50px;
+    margin-left: 10px;
+    border-radius: 5px;
+    background-color: #51948f;
+    color: white;
+    padding: 20px;
+    text-align: justify;
+}
+
+#post {
+    background-color: aliceblue;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    padding: 20px 30px 10px 30px;
+}
+
+#post h1 {
+    font-family: BebasNeue;
+    font-size: 32px;
     text-align: center;
+    margin: 0;
 }
 
-@media screen and (max-width: 360px) {
-    #blog-posts #right {
-        float: left;
-        margin-top: 5px;
-    }
+#tags {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    color: #51948f;
+}
+
+#blog_post {
+    background-color: aliceblue;
+    border-radius: 5px;
+    margin: auto;
+}
+
+#blog_content {
+    padding: 30px;
+    margin: auto;
+    width: 70%;
+}
+
+/* Swup Transitions */
+.transition-fade {
+    transition: 0.4s;
+    opacity: 1;
+}
+  
+html.is-animating .transition-fade {
+    opacity: 0;
 }

@@ -33,9 +33,12 @@ lazy_static! {
 static DB: Surreal<surrealdb::engine::local::Db> = Surreal::init();
 
 pub async fn start_blog(address: &str) -> Result<Server, Box<dyn std::error::Error>> {
+    log::info!("Starting blog server on {}", address);
+
     DB.connect::<surrealdb::engine::local::File>("/mnt/blog_data/blog.db")
         .await?;
     DB.use_ns("ns").use_db("db").await?;
+    log::info!("Connected to database");
 
     let token = std::env::var("RUST_BLOG_AUTH").unwrap();
 
@@ -69,5 +72,6 @@ pub async fn start_blog(address: &str) -> Result<Server, Box<dyn std::error::Err
     .bind(address)?
     .run();
 
+    log::info!("Blog server started on {}", address);
     Ok(srv)
 }

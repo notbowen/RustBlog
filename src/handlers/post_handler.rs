@@ -6,17 +6,10 @@ use actix_web::{
 use pulldown_cmark::{html, Options, Parser};
 use tera::Tera;
 
-use crate::{
-    model::post_model::{Post, PostBMC, PostPatch},
-    surrealdb_repo::SurrealDBRepo,
-};
+use crate::{model::post_model::Post, DB};
 
 #[get("/posts/{post_id}")]
-pub async fn post(
-    tmpl: Data<Tera>,
-    db: Data<SurrealDBRepo>,
-    post_id: Path<String>,
-) -> impl Responder {
+pub async fn post(tmpl: Data<Tera>, post_id: Path<String>) -> impl Responder {
     let mut context = tera::Context::new();
     let options = Options::all();
 
@@ -26,7 +19,9 @@ pub async fn post(
         return HttpResponse::BadRequest().body("<h1>Bad Request</h1><p>Invalid ID!</p>");
     }
 
-    let post_detail = match PostBMC::get(db, &id).await {
+    let post_detail: Result<Post, surrealdb::Error> = DB.select(("post", id)).await;
+
+    let post_detail = match post_detail {
         Ok(p) => p,
         Err(_) => {
             return HttpResponse::NotFound().body(
@@ -54,22 +49,19 @@ pub async fn post(
     }
 }
 
-pub async fn create_post(
-    _: Data<Tera>,
-    db: Data<SurrealDBRepo>,
-    new_post: Json<Post>,
-) -> HttpResponse {
-    let new_post = Post {
-        post_id: new_post.post_id.to_owned(),
-        tags: new_post.tags.to_owned(),
-        content: new_post.content.to_owned(),
-        posted: new_post.posted.to_owned(),
-        title: new_post.title.to_owned(),
-        estimated_reading_time: new_post.estimated_reading_time.to_owned(),
-        order: new_post.order.to_owned(),
-    };
-
-    let post_detail = PostBMC::create(db, new_post).await;
+pub async fn create_post(_: Data<Tera>, new_post: Json<Post>) -> HttpResponse {
+    let post_detail: Result<Post, surrealdb::Error> = DB
+        .create(("post", &new_post.post_id))
+        .content(Post {
+            post_id: new_post.post_id.to_owned(),
+            tags: new_post.tags.to_owned(),
+            content: new_post.content.to_owned(),
+            posted: new_post.posted.to_owned(),
+            title: new_post.title.to_owned(),
+            estimated_reading_time: new_post.estimated_reading_time.to_owned(),
+            order: new_post.order.to_owned(),
+        })
+        .await;
 
     match post_detail {
         Ok(p) => HttpResponse::Ok().json(p),
@@ -79,9 +71,8 @@ pub async fn create_post(
 
 pub async fn update_post(
     _: Data<Tera>,
-    db: Data<SurrealDBRepo>,
     post_id: Path<String>,
-    post_patch: Json<PostPatch>,
+    post_patch: Json<Post>,
 ) -> HttpResponse {
     let id = post_id.into_inner();
 
@@ -89,16 +80,18 @@ pub async fn update_post(
         return HttpResponse::BadRequest().body("<h1>Bad Request</h1><p>Invalid ID</p>");
     }
 
-    let data = PostPatch {
-        title: post_patch.title.to_owned(),
-        content: post_patch.content.to_owned(),
-        posted: post_patch.posted.to_owned(),
-        tags: post_patch.tags.to_owned(),
-        estimated_reading_time: post_patch.estimated_reading_time.to_owned(),
-        order: post_patch.order.to_owned(),
-    };
-
-    let update_result = PostBMC::update(db, &id, data).await;
+    let update_result: Result<Post, surrealdb::Error> = DB
+        .update(("post", &id))
+        .content(Post {
+            post_id: post_patch.post_id.to_owned(),
+            tags: post_patch.tags.to_owned(),
+            content: post_patch.content.to_owned(),
+            posted: post_patch.posted.to_owned(),
+            title: post_patch.title.to_owned(),
+            estimated_reading_time: post_patch.estimated_reading_time.to_owned(),
+            order: post_patch.order.to_owned(),
+        })
+        .await;
 
     match update_result {
         Ok(p) => HttpResponse::Ok().json(p),
@@ -106,20 +99,16 @@ pub async fn update_post(
     }
 }
 
-pub async fn delete_post(
-    _: Data<Tera>,
-    db: Data<SurrealDBRepo>,
-    post_id: Path<String>,
-) -> HttpResponse {
+pub async fn delete_post(_: Data<Tera>, post_id: Path<String>) -> HttpResponse {
     let id = post_id.into_inner();
 
     if id.is_empty() {
         return HttpResponse::BadRequest().body("<h1>Bad Request</h1><p>Invalid ID</p>");
     }
 
-    let result = PostBMC::delete(db, &id).await;
+    let delete_result: Result<Post, surrealdb::Error> = DB.delete(("post", &id)).await;
 
-    match result {
+    match delete_result {
         Ok(p) => HttpResponse::Ok().json(p),
         Err(e) => HttpResponse::InternalServerError().body(e.to_string()),
     }

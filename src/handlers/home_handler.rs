@@ -1,13 +1,9 @@
-use actix_web::{
-    get,
-    web::{self, Data},
-    HttpResponse, Responder,
-};
+use actix_web::{get, web, HttpResponse, Responder};
 
-use crate::{model::post_model::PostBMC, surrealdb_repo::SurrealDBRepo};
+use crate::{model::post_model::Post, DB};
 
 #[get("/")]
-pub async fn index(templates: web::Data<tera::Tera>, _db: Data<SurrealDBRepo>) -> impl Responder {
+pub async fn index(templates: web::Data<tera::Tera>) -> impl Responder {
     let context = tera::Context::new();
 
     match templates.render("home.html", &context) {
@@ -22,16 +18,21 @@ pub async fn index(templates: web::Data<tera::Tera>, _db: Data<SurrealDBRepo>) -
 }
 
 #[get("/posts")]
-pub async fn posts(templates: web::Data<tera::Tera>, db: Data<SurrealDBRepo>) -> impl Responder {
+pub async fn posts(templates: web::Data<tera::Tera>) -> impl Responder {
     let mut context = tera::Context::new();
 
-    let mut db_posts = match PostBMC::get_all(db).await {
+    let db_posts: Result<Vec<Post>, surrealdb::Error> = DB.select("post").await;
+
+    let mut db_posts = match db_posts {
         Ok(p) => p,
         Err(e) => {
             return HttpResponse::InternalServerError()
+                .content_type("text/html")
                 .body(format!("<h1>Internal Server Error</h1><p>Error: {e}</p>"))
         }
     };
+
+    dbg!(&db_posts);
 
     db_posts.sort_by(|a, b| b.order.cmp(&a.order));
 

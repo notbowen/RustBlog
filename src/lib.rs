@@ -1,16 +1,15 @@
 use actix_files::Files;
 use actix_web::dev::Server;
 use actix_web::guard::fn_guard;
-use actix_web::web::{self, Data};
+use actix_web::web;
 use actix_web::{middleware, App, HttpResponse, HttpServer};
-use surrealdb_repo::SurrealDBRepo;
+use surrealdb::Surreal;
 use tera::Tera;
 
 mod error;
 mod handlers;
 mod model;
 mod prelude;
-mod surrealdb_repo;
 mod utils;
 
 #[macro_use]
@@ -31,11 +30,12 @@ lazy_static! {
     };
 }
 
-pub async fn start_blog(address: &str) -> Result<Server, std::io::Error> {
-    let surreal = SurrealDBRepo::init()
-        .await
-        .expect("Able to connect to SurrealDB");
-    let db_data = Data::new(surreal);
+static DB: Surreal<surrealdb::engine::local::Db> = Surreal::init();
+
+pub async fn start_blog(address: &str) -> Result<Server, Box<dyn std::error::Error>> {
+    DB.connect::<surrealdb::engine::local::File>("/mnt/blog_data/blog.db")
+        .await?;
+    DB.use_ns("ns").use_db("db").await?;
 
     let token = std::env::var("RUST_BLOG_AUTH").unwrap();
 
@@ -45,7 +45,6 @@ pub async fn start_blog(address: &str) -> Result<Server, std::io::Error> {
         App::new()
             .wrap(middleware::NormalizePath::trim())
             .app_data(web::Data::new(TEMPLATES.clone()))
-            .app_data(db_data.clone())
             .wrap(middleware::Logger::new(
                 "%{r}a \"%r\" %s %b \"%{Referer}i\" \"%{User-Agent}i\" %T",
             ))

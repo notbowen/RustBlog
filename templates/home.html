@@ -21,7 +21,7 @@
                     </div>
                     <div id="post-inner">
                         <h1>{{ post.title | upper }}</h1>
-                        <p id="tags"><strong><i class="fa fa-clock-o"></i> {{ post.estimated_reading_time }} mins</strong></p>
+                        <p id="tags"><strong><i class="fa fa-clock-o"></i> {{ post.estimated_reading_time }} min(s)</strong></p>
                         <p id="post-content">{{ post.content | striptags | replace(from="#", to="") | replace(from="[", to="") | replace(from="]", to="") | replace(from=post.title, to="") | truncate(length=200, end="...") }}</p>
                     </div>
                 </div>

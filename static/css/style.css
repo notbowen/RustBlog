@@ -177,3 +177,46 @@ html {
 html.is-animating .transition-fade {
     opacity: 0;
 }
+
+/* Smaller Screens */
+@media (max-width: 480px) {
+    #nav ul {
+        width: 100%;
+    }
+
+    #home {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    #about {
+        width: 90%;
+        margin: auto;
+        margin-bottom: 20px;
+        float: none;
+    }
+
+    #posts {
+        width: 100%;
+        margin: auto;
+    }
+
+    #post {
+        margin-top: 50px;
+        justify-content: center;
+    }
+    
+    #post h1 {
+        margin-top: 10px;
+    }
+
+    #post-circle {
+        margin: auto;
+        margin-top: -72px;
+    }
+
+    #blog_post {
+        width: 100%;
+    }
+}

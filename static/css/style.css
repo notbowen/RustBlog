@@ -13,13 +13,6 @@ html {
     font-family: Montserrat;
 }
 
-img {
-    max-width: 100%;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
 #title {
     font-family: BebasNeue;
     font-size: 64px;
@@ -166,7 +159,13 @@ img {
 #blog_content {
     padding: 30px;
     margin: auto;
-    width: 70%;
+    width: 75%;
+}
+
+#blog_content h1 {
+    text-align: center;
+    font-family: BebasNeue;
+    font-size: 52px;
 }
 
 /* Swup Transitions */

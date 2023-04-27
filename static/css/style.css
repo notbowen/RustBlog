@@ -106,7 +106,8 @@ html {
     font-family: BebasNeue;
     font-size: 32px;
     text-align: center;
-    margin: 0;
+    max-width: 90%;
+    margin: auto;
 }
 
 #post-circle {
@@ -136,6 +137,10 @@ html {
 
 #post-circle #year {
     font-size: 13px;
+}
+
+#post-content {
+    word-wrap: break-word;
 }
 
 #post-inner {
@@ -178,7 +183,7 @@ html.is-animating .transition-fade {
     opacity: 0;
 }
 
-/* Smaller Screens */
+/* Mobile Devices */
 @media (max-width: 480px) {
     #nav ul {
         width: 100%;
@@ -218,5 +223,12 @@ html.is-animating .transition-fade {
 
     #blog_post {
         width: 100%;
+    }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+    #nav ul, #home, #blog_post {
+        width: 90%;
     }
 }

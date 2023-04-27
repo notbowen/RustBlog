@@ -5,7 +5,7 @@
     <div id="home">
         <div id="about">
             <img src="/static/images/profile_pic.jpg" alt="Profile Picture">
-            <p style="text-align: center;">About Me</p>
+            <p style="text-align: center;"><u>About Me</u></p>
             <p>Hi, I am a Year 1 student studying Cybersecurity and Digital Forensics in Ngee Ann Polytechnic.</p>
         </div>
 
@@ -13,9 +13,17 @@
             {% for post in posts %}
             <a href="/posts/{{ post.post_id }}">
                 <div id="post">
-                    <h1>{{ post.title | upper }}</h1>
-                    <p id="tags"><strong>{{ post.tags }}</strong></p>
-                    <p id="post-content">{{ post.content | striptags | replace(from="#", to="") | replace(from="[", to="") | replace(from="]", to="") | replace(from=post.title, to="") | truncate(length=200, end="...") }}</p>
+                    <div id="post-circle">
+                        {% set date = post.posted | split(pat=" ") %}
+                        <span id="day">{{ date | nth(n=0) }}</span>
+                        <span id="month">{{ date | nth(n=1) }}</span>
+                        <span id="year">{{ date | nth(n=2) }}</span>
+                    </div>
+                    <div id="post-inner">
+                        <h1>{{ post.title | upper }}</h1>
+                        <p id="tags"><strong><i class="fa fa-clock-o"></i> {{ post.estimated_reading_time }} mins</strong></p>
+                        <p id="post-content">{{ post.content | striptags | replace(from="#", to="") | replace(from="[", to="") | replace(from="]", to="") | replace(from=post.title, to="") | truncate(length=200, end="...") }}</p>
+                    </div>
                 </div>
             </a>
             {% endfor %}

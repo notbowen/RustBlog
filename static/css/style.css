@@ -13,6 +13,13 @@ html {
     font-family: Montserrat;
 }
 
+img {
+    max-width: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 #title {
     font-family: BebasNeue;
     font-size: 64px;
@@ -74,8 +81,8 @@ html {
 }
 
 #posts {
-    overflow: hidden;
-    min-height: 50px;
+    display: flex;
+    flex-direction: column;
 }
 
 #posts a {
@@ -86,7 +93,6 @@ html {
 #about {
     float: right;
     width: 45%;
-    min-height: 50px;
     margin-left: 10px;
     border-radius: 5px;
     background-color: #51948f;
@@ -96,9 +102,10 @@ html {
 }
 
 #post {
+    display: flex;
+    margin-bottom: 20px;
     background-color: aliceblue;
     border-radius: 5px;
-    margin-bottom: 20px;
     padding: 20px 30px 10px 30px;
 }
 
@@ -107,6 +114,40 @@ html {
     font-size: 32px;
     text-align: center;
     margin: 0;
+}
+
+#post-circle {
+    width: 80px;
+    position: absolute;
+    height: 80px;
+    border-radius: 50%;
+    color: #fff;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    background: #51948f;
+    z-index: 1;
+    margin-left: -72px;
+    display: flex;
+    flex-direction: column;
+}
+
+#post-circle #day {
+    font-size: 10px;
+}
+
+#post-circle #month {
+    font-family: BebasNeue;
+    font-size: 30px;
+}
+
+#post-circle #year {
+    font-size: 13px;
+}
+
+#post-inner {
+    display: inline-block;
+    width: 100%;
 }
 
 #tags {

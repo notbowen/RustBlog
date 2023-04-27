@@ -9,8 +9,8 @@
     <title>{% block title %}{% endblock title %}</title>
     {% endblock head %}
     <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
     <link rel="stylesheet" type="text/css" href="/static/css/github-markdown-light.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/tokyo-night-dark.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link rel="icon" type="image/png" sizes="32x32" href="/static/icons/favicon-32x32.png">
@@ -39,7 +39,7 @@
     <script src="https://unpkg.com/swup@3"></script>
     <script src="/static/js/app.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-    <script>hljs.highlightAll();</script>
+    <script>hljs.initHighlightingOnLoad();</script>
     </script>
 </body>
 </html>

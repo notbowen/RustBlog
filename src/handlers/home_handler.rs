@@ -24,7 +24,21 @@ pub async fn index(templates: web::Data<tera::Tera>) -> impl Responder {
     match templates.render("home.html", &context) {
         Ok(s) => HttpResponse::Ok().content_type("text/html").body(s),
         Err(e) => {
-            eprint!("{e}");
+            log::error!("{e}");
+            HttpResponse::InternalServerError()
+                .content_type("text/html")
+                .body(format!("<h1>Internal Server Error</h1><p>Error: {e}</p>"))
+        }
+    }
+}
+
+#[get("/portfolio")]
+pub async fn portfolio(templates: web::Data<tera::Tera>) -> impl Responder {
+    let context = tera::Context::new();
+    match templates.render("portfolio.html", &context) {
+        Ok(s) => HttpResponse::Ok().content_type("text/html").body(s),
+        Err(e) => {
+            log::error!("{e}");
             HttpResponse::InternalServerError()
                 .content_type("text/html")
                 .body(format!("<h1>Internal Server Error</h1><p>Error: {e}</p>"))

@@ -61,7 +61,7 @@ html {
     color: inherit;
 }
 
-#nav ul, #home, #blog_post {
+#nav ul, main {
     margin: 20px auto;
     width: 70%;
 }
@@ -228,7 +228,7 @@ html.is-animating .transition-fade {
 
 /* Tablets */
 @media (max-width: 768px) {
-    #nav ul, #home, #blog_post {
+    #nav ul, main {
         width: 90%;
     }
 }

@@ -32,10 +32,10 @@ pub async fn index(templates: web::Data<tera::Tera>) -> impl Responder {
     }
 }
 
-#[get("/portfolio")]
-pub async fn portfolio(templates: web::Data<tera::Tera>) -> impl Responder {
+#[get("/experience")]
+pub async fn experience(templates: web::Data<tera::Tera>) -> impl Responder {
     let context = tera::Context::new();
-    match templates.render("portfolio.html", &context) {
+    match templates.render("experience.html", &context) {
         Ok(s) => HttpResponse::Ok().content_type("text/html").body(s),
         Err(e) => {
             log::error!("{e}");

@@ -55,7 +55,7 @@ pub async fn start_blog(address: &str) -> Result<Server, Box<dyn std::error::Err
             .route("/health", web::get().to(HttpResponse::Ok))
             .service(handlers::index)
             .service(handlers::post)
-            .service(handlers::portfolio)
+            .service(handlers::experience)
             .service(
                 web::resource("/posts/{id}")
                     .guard(fn_guard(move |req| {

@@ -173,6 +173,73 @@ html {
     font-size: 52px;
 }
 
+#experience-top {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+#experience-top h1 {
+    font-family: BebasNeue;
+    font-size: 30px;
+    text-align: center;
+    padding: 20px;
+    background-color: aliceblue;
+    border-radius: 5px;
+    margin: auto;
+    margin-bottom: 20px;
+}
+
+#education {
+    float: left;
+    width: 50%;
+}
+
+#education-bubble {
+    margin: auto;
+    display: flex;
+    margin-bottom: 20px;
+    background-color: aliceblue;
+    border-radius: 5px;
+    padding: 20px 35px 10px 45px;
+    color: #000000;
+}
+
+#education-bubble h1 {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    background-color: transparent;
+}
+
+#education-circle {
+    width: 80px;
+    position: absolute;
+    height: 80px;
+    border-radius: 50%;
+    color: #fff;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    background: #51948f;
+    z-index: 1;
+    margin-left: -85px;
+    display: flex;
+    flex-direction: column;
+}
+
+#education-inner {
+    width: 100%;
+}
+
+#testimonials {
+    float: right;
+    width: 50%;
+    background-color: aliceblue;
+    border-radius: 5px;
+    margin: auto;
+}
+
 /* Swup Transitions */
 .transition-fade {
     transition: 0.4s;

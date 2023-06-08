@@ -1,7 +1,7 @@
 // Modified repo-card generator
 // Taken from: https://github.com/tarptaeya/repo-card/blob/master/repo-card.js
 
-window.addEventListener('DOMContentLoaded', async function() {
+let load_cards = async function() {
     const CACHE_TIMEOUT = 60000;
     async function get(url) {
       const now = new Date().getTime();
@@ -69,5 +69,7 @@ window.addEventListener('DOMContentLoaded', async function() {
       </div>
       `;
     }
-  });
+  };
+
+window.addEventListener("DOMContentLoaded", load_cards);
   

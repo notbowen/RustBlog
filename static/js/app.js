@@ -24,4 +24,5 @@ swup.on('popState', () => {
 
 swup.on("contentReplaced", () => {
     hljs.highlightAll();
+    load_cards();
 })

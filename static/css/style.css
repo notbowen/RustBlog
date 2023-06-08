@@ -233,6 +233,10 @@ html {
     width: 100%;
 }
 
+#education-inner #tags {
+    display: none;
+}
+
 #projects {
     float: right;
     width: 50%;
@@ -308,6 +312,31 @@ html.is-animating .transition-fade {
 
     #blog_post {
         width: 100%;
+    }
+
+    #experience-top {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    #education, #projects {
+        width: 100%;
+    }
+    
+    #education-circle {
+        display: none;
+    }
+
+    #education-inner hr {
+        display: none;
+    }
+
+    #education-inner #tags {
+        display: block;
+    }
+
+    #education-bubble {
+        padding: 20px 35px 10px 35px;
     }
 }
 

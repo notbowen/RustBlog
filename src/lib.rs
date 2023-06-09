@@ -36,7 +36,7 @@ pub async fn start_blog(address: &str) -> Result<Server, Box<dyn std::error::Err
     log::info!("Starting blog server on {}", address);
 
     let mut db_path = "/mnt/blog_data/blog.db";
-    if cfg!(windows) {
+    if cfg!(windows) || hostname::get().expect("Able to get hostname") == "soda-pop" {
         db_path = "./blog.db";
     }
 

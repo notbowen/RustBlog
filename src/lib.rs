@@ -45,6 +45,9 @@ pub async fn start_blog(address: &str) -> Result<Server, Box<dyn std::error::Err
     DB.use_ns("ns").use_db("db").await?;
     log::info!("Connected to database");
 
+    #[cfg(debug_assertions)]
+    dotenv::dotenv().expect("Able to find .env file"); // Load secrets from .env file if testing
+
     let token = std::env::var("RUST_BLOG_AUTH").unwrap();
 
     let srv = HttpServer::new(move || {

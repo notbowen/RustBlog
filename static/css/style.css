@@ -61,7 +61,8 @@ html {
     color: inherit;
 }
 
-#nav ul, main {
+#nav ul,
+main {
     margin: 20px auto;
     width: 70%;
 }
@@ -173,13 +174,8 @@ html {
     font-size: 52px;
 }
 
-#experience-top {
-    display: flex;
-    gap: 20px;
-    align-items: flex-start;
-}
-
-#experience-top h1 {
+#education h1,
+#projects h1 {
     font-family: BebasNeue;
     font-size: 30px;
     text-align: center;
@@ -188,12 +184,6 @@ html {
     border-radius: 5px;
     margin: auto;
     margin-bottom: 20px;
-}
-
-#education {
-    margin-top: 0;
-    float: left;
-    width: 50%;
 }
 
 #education-bubble {
@@ -213,33 +203,11 @@ html {
     background-color: transparent;
 }
 
-#education-circle {
-    width: 80px;
-    position: absolute;
-    height: 80px;
-    border-radius: 50%;
-    color: #fff;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    background: #51948f;
-    z-index: 1;
-    margin-left: -85px;
-    display: flex;
-    flex-direction: column;
-}
-
 #education-inner {
     width: 100%;
 }
 
-#education-inner #tags {
-    display: none;
-}
-
 #projects {
-    float: right;
-    width: 50%;
     border-radius: 5px;
     margin: auto;
     margin-top: 0;
@@ -267,7 +235,7 @@ html {
     transition: 0.4s;
     opacity: 1;
 }
-  
+
 html.is-animating .transition-fade {
     opacity: 0;
 }
@@ -300,7 +268,7 @@ html.is-animating .transition-fade {
         margin-top: 50px;
         justify-content: center;
     }
-    
+
     #post h1 {
         margin-top: 10px;
     }
@@ -318,21 +286,14 @@ html.is-animating .transition-fade {
         display: flex;
         flex-direction: column;
     }
-    
-    #education, #projects {
+
+    #education,
+    #projects {
         width: 100%;
-    }
-    
-    #education-circle {
-        display: none;
     }
 
     #education-inner hr {
         display: none;
-    }
-
-    #education-inner #tags {
-        display: block;
     }
 
     #education-bubble {
@@ -342,7 +303,17 @@ html.is-animating .transition-fade {
 
 /* Tablets */
 @media (max-width: 768px) {
-    #nav ul, main {
+    #nav ul,
+    main {
         width: 90%;
     }
+}
+
+/* Splide.JS Button Offset */
+.splide__arrow--prev {
+    left: -30px;
+}
+
+.splide__arrow--next {
+    right: -30px;
 }

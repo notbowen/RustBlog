@@ -24,10 +24,18 @@ swup.on("popState", () => {
 });
 
 swup.on("contentReplaced", () => {
+    on_page_load();
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    on_page_load();
+})
+
+function on_page_load() {
     hljs.highlightAll();
     init_on_page("experience", init_splide);
     init_on_page("experience", load_cards);
-});
+}
 
 // Splide.JS code
 function init_splide() {

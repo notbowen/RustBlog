@@ -174,8 +174,7 @@ main {
     font-size: 52px;
 }
 
-#education h1,
-#projects h1 {
+#experience h1 {
     font-family: BebasNeue;
     font-size: 30px;
     text-align: center;
@@ -228,6 +227,38 @@ main {
 
 .repo-card {
     color: transparent;
+}
+
+#testimonial-bubble {
+    margin: auto;
+    margin-bottom: 20px;
+    background-color: aliceblue;
+    border-radius: 5px;
+    padding: 20px 35px 10px 45px;
+    color: #000000;
+}
+
+#testimonial-bubble h1 {
+    padding: 10px;
+    margin: 0;
+}
+
+#testimonial-bubble img {
+    display: block;
+    margin: auto;
+    object-fit: cover;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+
+#testimonial-bubble a {
+    color: #51948f;
+    text-decoration: none;
+}
+
+#testimonial-bubble a:hover {
+    color: #396868;
 }
 
 /* Swup Transitions */

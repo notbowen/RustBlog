@@ -45,6 +45,7 @@ function init_splide() {
         perPage: 2,
         perMove: 1,
         gap: 20,
+        focus: 0,
         breakpoints: {
             480: {
                 perPage: 1,

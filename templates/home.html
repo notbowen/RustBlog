@@ -2,8 +2,8 @@
 {% block title %}Hu Bowen | Home{% endblock title %}
 
 {% block content %}
-    <div id="home">
-        <div id="about">
+    <div class="home">
+        <div class="about">
             <img src="/static/images/profile_pic.jpg" alt="Profile Picture">
             <p style="text-align: center;"><u>About Me</u></p>
             <p>
@@ -14,20 +14,20 @@
             </p>
         </div>
 
-        <div id="posts">
+        <div class="posts">
             {% for post in posts %}
             <a href="/posts/{{ post.post_id }}">
-                <div id="post">
-                    <div id="post-circle">
+                <div class="post">
+                    <div class="post-circle">
                         {% set date = post.posted | split(pat=" ") %}
-                        <span id="day">{{ date | nth(n=0) }}</span>
-                        <span id="month">{{ date | nth(n=1) }}</span>
-                        <span id="year">{{ date | nth(n=2) }}</span>
+                        <span class="day">{{ date | nth(n=0) }}</span>
+                        <span class="month">{{ date | nth(n=1) }}</span>
+                        <span class="year">{{ date | nth(n=2) }}</span>
                     </div>
-                    <div id="post-inner">
+                    <div class="post-inner">
                         <h1>{{ post.title | upper }}</h1>
-                        <p id="tags"><strong><i class="fa fa-clock-o"></i> {{ post.estimated_reading_time }} min(s)</strong></p>
-                        <p id="post-content">{{ post.content | striptags | replace(from="#", to="") | replace(from="[", to="") | replace(from="]", to="") | replace(from=post.title, to="") | truncate(length=200, end="...") }}</p>
+                        <p class="tags"><strong><i class="fa fa-clock-o"></i> {{ post.estimated_reading_time }} min(s)</strong></p>
+                        <p class="post-content">{{ post.content | striptags | replace(from="#", to="") | replace(from="[", to="") | replace(from="]", to="") | replace(from=post.title, to="") | truncate(length=200, end="...") }}</p>
                     </div>
                 </div>
             </a>

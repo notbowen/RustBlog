@@ -2,36 +2,39 @@
 {% block title %}Hu Bowen | Home{% endblock title %}
 
 {% block content %}
-    <div class="home">
-        <div class="about">
-            <img src="/static/images/profile_pic.jpg" alt="Profile Picture">
-            <p style="text-align: center;"><u>About Me</u></p>
-            <p>
-                Hi, I am a Year 1 student currently pursuing a diploma in
-                Cybersecurity and Digital Forensics in Ngee Ann Polytechnic.
-                This site is still in active development, thus more sections
-                will be added in the near future. Do check back for updates!
-            </p>
-        </div>
-
-        <div class="posts">
-            {% for post in posts %}
-            <a href="/posts/{{ post.post_id }}">
-                <div class="post">
-                    <div class="post-circle">
-                        {% set date = post.posted | split(pat=" ") %}
-                        <span class="day">{{ date | nth(n=0) }}</span>
-                        <span class="month">{{ date | nth(n=1) }}</span>
-                        <span class="year">{{ date | nth(n=2) }}</span>
-                    </div>
-                    <div class="post-inner">
-                        <h1>{{ post.title | upper }}</h1>
-                        <p class="tags"><strong><i class="fa fa-clock-o"></i> {{ post.estimated_reading_time }} min(s)</strong></p>
-                        <p class="post-content">{{ post.content | striptags | replace(from="#", to="") | replace(from="[", to="") | replace(from="]", to="") | replace(from=post.title, to="") | truncate(length=200, end="...") }}</p>
-                    </div>
-                </div>
-            </a>
-            {% endfor %}
-        </div>
+<div class="home">
+    <div class="about">
+        <img src="/static/images/profile_pic.jpg" alt="Profile Picture">
+        <p style="text-align: center;"><u>About Me</u></p>
+        <p>
+            Hi, I am a Year 1 student currently pursuing a diploma in
+            Cybersecurity and Digital Forensics in Ngee Ann Polytechnic.
+            This site is still in active development, thus more sections
+            will be added in the near future. Do check back for updates!
+        </p>
     </div>
+
+    <div class="posts">
+        {% for post in posts %}
+        <a href="/posts/{{ post.post_id }}">
+            <div class="post">
+                <div class="post-circle">
+                    {% set date = post.posted | split(pat=" ") %}
+                    <span class="day">{{ date | nth(n=0) }}</span>
+                    <span class="month">{{ date | nth(n=1) }}</span>
+                    <span class="year">{{ date | nth(n=2) }}</span>
+                </div>
+                <div class="post-inner">
+                    <h1>{{ post.title | upper }}</h1>
+                    <p class="tags"><strong><i class="fa fa-clock-o"></i> {{ post.estimated_reading_time }}
+                        min(s)</strong></p>
+                    <p class="post-content">{{ post.content | striptags | replace(from="#", to="") | replace(from="[",
+                        to="") | replace(from="]", to="") | replace(from=post.title, to="") | truncate(length=200,
+                        end="...") }}</p>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
 {% endblock content %}

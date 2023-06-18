@@ -209,8 +209,9 @@ main {
     color: white;
 }
 
-.projects h1 {
-    background-color: #51948f;
+.green-h1 {
+    background-color: #51948f !important;
+    color: white !important;
 }
 
 .project-bubble {
@@ -253,6 +254,28 @@ main {
 
 .testimonial-bubble a:hover {
     color: #396868;
+}
+
+.certificate-bubble {
+    margin: auto auto 20px;
+    background-color: #51948f;
+    border-radius: 5px;
+    padding: 10px 35px 10px 45px;
+    color: white;
+}
+
+.certificate-bubble img {
+    width: 100%;
+    border-radius: 5px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.certificate-bubble h2 {
+    padding: 10px;
+    margin: 0;
+    text-align: center;
 }
 
 /* Swup Transitions */
@@ -332,11 +355,29 @@ html.is-animating .transition-fade {
     }
 }
 
-/* Splide.JS Button Offset */
+/* Splide.JS Buttons */
+.splide__arrow {
+    background: #51948f;
+}
+
+.splide__arrow svg {
+    fill: white;
+}
+
 .splide__arrow--prev {
     left: -30px;
 }
 
 .splide__arrow--next {
     right: -30px;
+}
+
+.splide__arrows {
+    position: sticky;
+    top: 50%;
+    margin-top: 350px;
+}
+
+.splide__track {
+    top: -330px;
 }
